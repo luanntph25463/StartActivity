@@ -9,13 +9,13 @@ import android.os.Bundle
 
 class HomeScreens : AppCompatActivity() {
     private lateinit var alarmManager: AlarmManager
-    private lateinit var pendingIntent: PendingIntent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screens)
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         setTime_Savescreens(5)
     }
+
     private fun setTime_Savescreens(minutes: Int) {
         val triggerTime = System.currentTimeMillis() + (minutes * 60 * 1000)
 

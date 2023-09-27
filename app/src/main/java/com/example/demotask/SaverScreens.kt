@@ -1,8 +1,6 @@
 package com.example.demotask
 
-import android.app.AlarmManager
-import android.content.Context
-import android.content.SharedPreferences
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

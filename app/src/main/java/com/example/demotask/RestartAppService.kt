@@ -26,12 +26,8 @@ class RestartAppService : Service() {
             val notification = createNotification()
             startForeground(NOTIFICATION_ID, notification)
         } else {
-            // Hành động khởi chạy Foreground Service cho phiên bản Android cũ hơn
-            // (trước Android Oreo)
-            // ...
-        }
 
-        // Thực hiện các công việc của Service ở đây
+        }
 
         return START_STICKY
     }
