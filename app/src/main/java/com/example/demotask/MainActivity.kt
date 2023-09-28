@@ -31,9 +31,12 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "Đã Vào ĐÂy")
         // Khởi tạo AlarmManager
          alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        // Khởi tạo Intent với action "com.example.demotask.CUSTOM_ACTION"
+
+
          intent = Intent(this, AppStartBroadcastReceiver::class.java)
+
         // Khởi tạo PendingIntent
+
          pendingIntent = PendingIntent.getBroadcast(
             this,
             0,

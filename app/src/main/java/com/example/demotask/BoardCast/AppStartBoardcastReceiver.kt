@@ -16,6 +16,7 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "BoardCast"
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
+
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("Vào ĐÂy", "s")
         scheduleAlarm(context)
@@ -41,8 +42,8 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val hour = 9
-        val minute = 52
+        val hour = 13
+        val minute = 23
 
         setSpecificAlarmTime(hour, minute, context)
     }
