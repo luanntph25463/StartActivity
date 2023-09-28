@@ -5,10 +5,18 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupContent="@xml/device_admin"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,7 +24,7 @@
         android:theme="@style/Theme.DemoTask"
         tools:targetApi="31">
         <receiver
-            android:name=".AppStartBroadcastReceiver"
+            android:name=".BoardCast.AppStartBroadcastReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -28,14 +36,14 @@
             </intent-filter>
         </receiver>
         <service
-            android:name=".RestartAppService"
+            android:name=".Services.RestartAppService"
             android:enabled="true"
             android:exported="false" />
         <activity
-            android:name=".SaverScreens"
+            android:name=".Screens.SaverScreens"
             android:exported="false" />
         <activity
-            android:name=".HomeScreens"
+            android:name=".Screens.HomeScreens"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -47,10 +55,7 @@
         </activity>
 
         <!-- Khai báo WakeUpReceiver -->
-        <receiver
-            android:name=".WakeUpReceiver"
-            android:enabled="true"
-            android:exported="false" />
+
     </application>
 
 </manifest>

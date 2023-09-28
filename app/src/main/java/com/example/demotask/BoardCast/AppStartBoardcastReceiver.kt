@@ -1,26 +1,15 @@
-package com.example.demotask
+package com.example.demotask.BoardCast
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.PixelFormat
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
 import android.util.Log
-import android.view.WindowManager
 import android.widget.Toast
-import java.math.BigDecimal
-import java.math.BigInteger
-import androidx.core.content.ContextCompat
-import com.example.demotask.HomeScreens
+import com.example.demotask.Screens.HomeScreens
 import com.example.demotask.MainActivity
-import com.example.demotask.RestartAppService
+import com.example.demotask.Services.RestartAppService
 import java.util.Calendar
 
 class AppStartBroadcastReceiver : BroadcastReceiver() {
@@ -28,8 +17,6 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
     override fun onReceive(context: Context, intent: Intent) {
-            // use Action_Screen_OFF check  when screens off
-            // Màn hình tắt, khởi chạy ứng dụng
         Log.d("Vào ĐÂy", "s")
         scheduleAlarm(context)
         when (intent.action) {
@@ -44,16 +31,22 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
             }
         }
     }
+
     private fun scheduleAlarm(context: Context) {
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MainActivity::class.java)
-        pendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val hour = 16
-        val minute = 1
-        setSpecificAlarmTime(hour, minute, context)
+        pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val hour = 9
+        val minute = 52
 
+        setSpecificAlarmTime(hour, minute, context)
     }
+
     private fun setSpecificAlarmTime(hour: Int, minute: Int, context: Context) {
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
@@ -79,25 +72,6 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, servicePendingIntent)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
-    // fun check wakeUpAlarm
-//    private fun scheduleWakeUpAlarm(context: Context) {
-//        Log.d(TAG, "wakeUpTime")
-//
-//        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        val intent = Intent(context, WakeUpReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(
-//            context,
-//            0,
-//            intent,
-//            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-//        )
-//        val wakeUpTime = System.currentTimeMillis() + 5000 // Thời gian "wake up" sau 5 giây
-//        alarmManager.setExactAndAllowWhileIdle(
-//            AlarmManager.RTC_WAKEUP,
-//            wakeUpTime,
-//            pendingIntent
-//        )
-//    }
 }
 
 

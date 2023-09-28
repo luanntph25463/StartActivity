@@ -1,4 +1,4 @@
-package com.example.demotask
+package com.example.demotask.Services
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.example.demotask.MainActivity
+import com.example.demotask.R
 
 class RestartAppService : Service() {
     private val NOTIFICATION_ID = 1
@@ -21,12 +23,10 @@ class RestartAppService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Kiểm tra phiên bản Android để quyết định cách khởi chạy Foreground Service
+        // SDK >=  29
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notification = createNotification()
             startForeground(NOTIFICATION_ID, notification)
-        } else {
-
         }
 
         return START_STICKY
@@ -40,7 +40,7 @@ class RestartAppService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Your Channel Name",
+                "Channel",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
