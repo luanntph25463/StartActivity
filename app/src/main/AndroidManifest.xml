@@ -54,18 +54,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Khai báo WakeUpReceiver -->
-        <service
-            android:name=".MyDreamService"
-            android:label="My Dream Service"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:permission="android.permission.BIND_DREAM_SERVICE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.dreams.DreamService" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>
