@@ -19,7 +19,12 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("Vào ĐÂy", "s")
-        scheduleAlarm(context)
+        val hour = intent.getIntExtra("EXTRA_HOUR", 0)
+        val minute = intent.getIntExtra("EXTRA_MINUTE", 0)
+
+        Log.d(TAG, "Hour: $hour, Minute: $minute")
+
+        scheduleAlarm(context, hour, minute)
         when (intent.action) {
             "com.example.demotask.CUSTOM_ACTION" -> {
                 // Chuyển đến HomeActivity
@@ -33,7 +38,7 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun scheduleAlarm(context: Context) {
+    private fun scheduleAlarm(context: Context, hour: Int, minute: Int) {
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MainActivity::class.java)
         pendingIntent = PendingIntent.getActivity(
@@ -42,13 +47,14 @@ class AppStartBroadcastReceiver : BroadcastReceiver() {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val hour = 13
-        val minute = 23
-
         setSpecificAlarmTime(hour, minute, context)
     }
 
     private fun setSpecificAlarmTime(hour: Int, minute: Int, context: Context) {
+
+        Toast.makeText(context, "$hour", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "$minute", Toast.LENGTH_SHORT).show()
+
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, hour)

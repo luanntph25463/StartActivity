@@ -12,7 +12,8 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-
+    <uses-permission android:name="android.permission.ACTION_SCREEN_ON" />
+    <uses-permission android:name="android.permission.ACTION_SCREEN_OFF" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,6 +34,15 @@
                 <action android:name="android.intent.action.SCREEN_OFF" />
                 <action android:name="com.example.app.OPEN_APP_ACTION" />
                 <action android:name="com.example.demotask.CUSTOM_ACTION" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".BoardCast.PowerButtonBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
             </intent-filter>
         </receiver>
         <service

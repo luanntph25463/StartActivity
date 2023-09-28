@@ -13,6 +13,7 @@ import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
 import android.widget.Button
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.demotask.BoardCast.AppStartBroadcastReceiver
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
     private lateinit var intent: Intent
+    private lateinit var timePicker: TimePicker
 
     private val TAG = "MainActivity"
 
@@ -30,11 +32,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Log.d(TAG, "Đã Vào ĐÂy")
         // Khởi tạo AlarmManager
-         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        timePicker = findViewById(R.id.timePicker)
          intent = Intent(this, AppStartBroadcastReceiver::class.java)
-
         // Khởi tạo PendingIntent
 
          pendingIntent = PendingIntent.getBroadcast(
@@ -71,7 +72,26 @@ class MainActivity : AppCompatActivity() {
                 pendingIntent
             )
         }
+
+        val setAlarmButton  =  findViewById<Button>(R.id.submitButton)
+        setAlarmButton.setOnClickListener {
+            onSetAlarmClicked()
+        }
     }
+
+    private fun onSetAlarmClicked() {
+        sendBroadcastWithTime()
+    }
+
+
+    private fun sendBroadcastWithTime() {
+        val hour = timePicker.currentHour
+        val minute = timePicker.currentMinute
+        intent.putExtra("EXTRA_HOUR", hour)
+        intent.putExtra("EXTRA_MINUTE", minute)
+        sendBroadcast(intent)
+    }
+
     override fun onResume() {
         super.onResume()
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -85,6 +105,5 @@ class MainActivity : AppCompatActivity() {
             wakeLock.release()
         }, 2000) // Đặt độ trễ tùy ý (ví dụ: 2 giây)
         Toast.makeText(applicationContext, "Chào Mừng Quay Trở lại main Activity!", Toast.LENGTH_SHORT).show()
-
     }
 }
